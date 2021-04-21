@@ -8,3 +8,22 @@ user: 'root',
 password: 'password',
 database: 'employee_tracker'
 })
+
+db.connect((err) =>{
+    if (err) throw err;
+    //The starting function go here
+
+});
+
+const startTracker = () => {
+ inquirer.prompt({
+
+    type: 'rawlist',
+    name: 'action',
+    message: 'What would you like to do?',
+    choices: [
+        ''
+    ]
+})
+
+}
