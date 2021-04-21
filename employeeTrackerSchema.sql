@@ -64,6 +64,16 @@ values ('Ashley', 'Rodriguez', 1, null),
 select * from employee;
 
 
-
+------------------View All Employees Query--------------------
+select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary, 
+concat(e.first_name,' ',e.last_name) as "manager"
+from department
+inner join role
+on role.department_id = department.id
+inner join employee
+on role.id = employee.role_id
+left join employee e
+on employee.manager_id =  e.id 
+;
 
 

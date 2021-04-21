@@ -36,6 +36,7 @@ const startTracker = () => {
     switch (answer.action) {
         case 'View All Employees' :
             //function
+            allEmployees();
             break;
         case 'Add Employee' :
             //function
@@ -61,4 +62,14 @@ const startTracker = () => {
     }
 });
 
+}
+const allEmployees = () => {
+
+    let query = ('select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary,concat(e.first_name," ",e.last_name) as manager from department inner join role on role.department_id = department.id inner join employee on role.id = employee.role_id left join employee e on employee.manager_id =  e.id ;')
+db.query(query, (err, res) => {
+    if(err) throw err;
+    console.table(res);
+    startTracker();
+
+})
 }
