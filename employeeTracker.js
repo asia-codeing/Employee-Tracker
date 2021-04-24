@@ -46,6 +46,14 @@ const startTracker = () => {
             //function
             viewAllEmployees();
             break;
+        case 'View All Employees By Manager' :
+            //function
+            viewByManager();
+            break;
+        case 'View All Employees By Department' :
+            //function
+            viewByDepartment();
+            break;
         case 'View Departments' :
             //function
             viewDepartments(); 
@@ -70,6 +78,10 @@ const startTracker = () => {
             //function
             addEmployee();
             break;
+        case 'Update Employee Role' :
+            //function
+            updateRole();
+            break;    
         case 'Update Employee Role' :
             //function
             updateRole();
@@ -112,6 +124,11 @@ db.query(query, (err, res) => {
     console.table(res);
     startTracker();
   })
+}
+
+const viewByManager = () => {
+
+    
 }
 
 const viewDepartments = () => {
@@ -258,6 +275,7 @@ const addEmployee = () => {
 }
 
 //=============================Update Functions====================
+
 const updateRole = () => {
   const query = ('select concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
   db.query(query, (err, results) => {
@@ -311,7 +329,8 @@ const updateRole = () => {
     });
 
 }
-//===========================Remove Functions=================
+//===========================Remove Functions===================
+
 const removeDepartment = () => {
     query = ('select * from department');
     db.query(query, (err, results) => {
