@@ -53,7 +53,7 @@ const startTracker = () => {
         case 'View All Employees By Department' :
             //function
             viewByDepartment();
-            break;
+            break;    
         case 'View Departments' :
             //function
             viewDepartments(); 
@@ -86,12 +86,7 @@ const startTracker = () => {
             //function
             updateRole();
             break;    
-        case 'View All Employees By Department' :
-            //function
-            break;     
-        case 'View All Employees By Manager' :
-            //function
-            break;
+        
         case 'Update Employee Manager' :
             //function
             break;
@@ -128,6 +123,12 @@ db.query(query, (err, res) => {
 
 const viewByManager = () => {
 
+
+}
+
+
+const viewByDepartment = () => {
+
     
 }
 
@@ -162,7 +163,6 @@ const  viewBudget = () => {
 //=================================Add Functions====================
 
 const addDepartment = () => {
-
     inquirer.prompt({
         type: 'input',
         name: 'departmentName',
