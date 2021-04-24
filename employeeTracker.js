@@ -82,13 +82,9 @@ const startTracker = () => {
             //function
             updateRole();
             break;    
-        case 'Update Employee Role' :
-            //function
-            updateRole();
-            break;    
-        
         case 'Update Employee Manager' :
             //function
+            updateManager(); 
             break;
         case 'Remove Department' :
             //function
@@ -329,6 +325,12 @@ const updateRole = () => {
     });
 
 }
+
+const updateManager = () => {
+
+
+}
+
 //===========================Remove Functions===================
 
 const removeDepartment = () => {
