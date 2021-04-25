@@ -322,22 +322,17 @@ const updateRole = () => {
         
         // let roleID = [];
         // let employeeID = [];
-
-        // /// get ID of role selected
         // for (i=0; i < results.length; i++){
         //     if (answer.newRole == results[i].title){
         //         roleID = results[i].id;
         //     }
         // }
-
-        // // get ID of employee selected
         // for (i=0; i < results.length; i++){
         //     if (answer.employeeName == results[i].fullName){
         //         employeeID = results[i].id;
         //     }
         // }
         
-        // update employee with new role
         db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`,
         (err, results) => {
                     if (err) throw err;
