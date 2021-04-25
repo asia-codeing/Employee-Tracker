@@ -106,7 +106,7 @@ const startTracker = () => {
 
 }
 
-//===============================View Functions========================
+//=====================================================================View Functions===================================================
 
 const viewAllEmployees = () => {
     let query = ('select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary,concat(e.first_name," ",e.last_name) as manager from department inner join role on role.department_id = department.id inner join employee on role.id = employee.role_id left join employee e on employee.manager_id =  e.id ;')
@@ -264,14 +264,19 @@ const addEmployee = () => {
         db.query(
             `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?, ?, 
             (SELECT id FROM role WHERE title = ? ), 
-            (SELECT id FROM (SELECT id FROM employee WHERE CONCAT(first_name,last_name) = ? ) AS manager))`, [answer.firstName, answer.lastName, answer.role, answer.manager]
+            (SELECT id FROM (SELECT id FROM employee WHERE CONCAT(first_name,last_name) = ? ) AS manager))`, [answer.firstName, answer.lastName, answer.role, answer.manager],
+            (err) => {
+                if(err) throw err;
+                
+                console.log('Employee Added!');
+                startTracker();
+            }
         )
-        startTracker();
     })
  });
 }
 
-//=============================Update Functions====================
+//=====================================================Update Functions===============================================================
 
 const updateRole = () => {
   const query = ('select  employee.id, concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
@@ -349,7 +354,7 @@ const updateManager = () => {
 
 }
 
-//===========================Remove Functions===================
+//==================================================================Remove Functions=======================================================
 
 const removeDepartment = () => {
     query = ('select * from department');
