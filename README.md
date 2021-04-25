@@ -9,7 +9,6 @@ Application that managing a company's employees using node, inquirer, and MySQL.
   * [Usage](#usage)
   * [Screenshots](#screenshots)
   * [Walkthrough-Video](#walkthrough-video)
-  * [Link-to-deployed-application](#link-to-deployed-application)
   * [License](#license)
   * [Contributing](#contributing)
   * [Questions](#questions)
@@ -17,7 +16,8 @@ Application that managing a company's employees using node, inquirer, and MySQL.
   ## Installation:
   We need to make sure that our repo contain `package.json` with the required dependencies to get these files we need to apply the following commands:
   * ``` npm init ``` to install the package.json.
-  * 
+  * ``` npm i inquirer ``` installing inquirer package.
+  * ``` npm i mysql ``` installing MYSQL package.
 
   ## Usage:
   * open the terminal.
@@ -35,8 +35,6 @@ Application that managing a company's employees using node, inquirer, and MySQL.
   Check this video that demonstrates the functionality of the application:<br />
    [Walkthrough-Video]()
   
-  ## Link to deployed application:
-   []()
   
   ## License:
   This project is convered under the MIT License.
