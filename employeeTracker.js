@@ -199,11 +199,11 @@ const addRole = () => {
         }
 
 ]).then((answer) => {
-        db.query('insert into role (title, salary, department_id) values ?',[
+        db.query('insert into role set ?',[
             {
             title: answer.title,
-            salary: answer.salary,
-            department_id: answer.departmentId
+            salary: JSON.parse(answer.salary),
+            department_id: JSON.parse(answer.departmentId)
             }
         ],
         (err) => {
@@ -260,10 +260,11 @@ const addEmployee = () => {
         }
 
     ]).then((answer) => {
+        console.log(answer);
         db.query(
             `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?, ?, 
             (SELECT id FROM role WHERE title = ? ), 
-            (SELECT id FROM (SELECT id FROM employee WHERE CONCAT(first_name," ",last_name) = ? ) AS manager))`, [answer.firstName, answer.lastName, answer.role, answer.manager]
+            (SELECT id FROM (SELECT id FROM employee WHERE CONCAT(first_name,last_name) = ? ) AS manager))`, [answer.firstName, answer.lastName, answer.role, answer.manager]
         )
         startTracker();
     })
@@ -273,10 +274,10 @@ const addEmployee = () => {
 //=============================Update Functions====================
 
 const updateRole = () => {
-  const query = ('select concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
+  const query = ('select  employee.id, concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
   db.query(query, (err, results) => {
       if(err) throw err;
-
+      console.log(results);
       inquirer.prompt([
           {
               type: 'list',
@@ -305,18 +306,40 @@ const updateRole = () => {
           }
       ])
       .then((answer) => {
-          db.query(`UPDATE employee 
-          SET role_id = (SELECT id FROM role WHERE title = ? ) 
-          WHERE id = (SELECT id FROM(SELECT id FROM employee WHERE CONCAT(first_name," ",last_name) = ?) AS fullName)`,
-            [
-                {
-                    updated:answer.newRole,
-                }, 
-                {
-                    employee:answer.employeeName,
-                }
+          console.log(answer);
+        //   db.query(`UPDATE employee 
+        //   SET role_id = ? 
+        //   WHERE id = ?`,
+        //     [
+        //         {
+        //             updated:answer.newRole,
+        //         }, 
+        //         {
+        //             employee:answer.employeeName,
+        //         }
                 
-            ], (err, results) => {
+        //     ], 
+        
+        // let roleID = [];
+        // let employeeID = [];
+
+        // /// get ID of role selected
+        // for (i=0; i < results.length; i++){
+        //     if (answer.newRole == results[i].title){
+        //         roleID = results[i].id;
+        //     }
+        // }
+
+        // // get ID of employee selected
+        // for (i=0; i < results.length; i++){
+        //     if (answer.employeeName == results[i].fullName){
+        //         employeeID = results[i].id;
+        //     }
+        // }
+        
+        // update employee with new role
+        db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`,
+        (err, results) => {
                     if (err) throw err;
                     console.log(results + 'Role Updated!');
                     startTracker();
