@@ -29,7 +29,8 @@ Application that managing a company's employees using node, inquirer, and MySQL.
   ```
   
   ## Screenshots:
-  ()
+  ![ET1](./assets/images/eT1.png)
+  ![ET2](./assets/images/eT2.png)
 
   ## Walkthrough Video:
   Check this video that demonstrates the functionality of the application:<br />
