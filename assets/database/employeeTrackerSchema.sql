@@ -10,11 +10,6 @@ primary key (id)
 );
 
 
---Insert data to Department Table-- 
-insert into department (name)
-values ('Engineering'),('Sales'),('Finance'),('Legal');
-select * from department;
-
 -------------------------------Role Table------------------
 create table role(
 id int not null auto_increment,
@@ -24,18 +19,6 @@ department_id INT,
 primary key (id),
 foreign key (department_id) references department(id)
 );
-
-
---Insert data to Role Table--
-insert into role (title, salary, department_id)
-values ('Lead Engineer',150000,1), 
-('Software Engineer', 120000, 1),
-('Sales Lead', 100000, 2),
-('Salesperson', 80000, 2),
-('Accountant', 125000, 3),
-('Leagal Team Lead', 250000, 4),
-('Lawyer', 190000, 4);
-select * from role;
 
 
 ------------------------------Employee Table-------------
@@ -51,19 +34,6 @@ foreign key (role_id) references  role(id)
 );
 
 
---Insert data to Employee Table--
-insert into employee (first_name, last_name, role_id, manager_id)
-values ('Ashley', 'Rodriguez', 1, null),
-('Kevin', 'Tupik', 2, 1),
-('John', 'Doe', 3, 1),
-('Mike', 'Chad', 4, 3),
-('Malia', 'Brown', 5, null),
-('Sarah', 'Lourd', 6, null),
-('Tom', 'Allen', 7, 6);
-
-select * from employee;
-
-
 ------------------View All Employees Query--------------------
 select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary, 
 concat(e.first_name,' ',e.last_name) as "manager"
@@ -73,7 +43,6 @@ on role.department_id = department.id
 inner join employee
 on role.id = employee.role_id
 left join employee e
-on employee.manager_id =  e.id 
-;
+on employee.manager_id =  e.id ;
 
 
