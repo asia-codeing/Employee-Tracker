@@ -260,7 +260,6 @@ const addEmployee = () => {
         }
 
     ]).then((answer) => {
-        console.log(answer);
         db.query(
             `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?, ?, 
             (SELECT id FROM role WHERE title = ? ), 
@@ -282,7 +281,6 @@ const updateRole = () => {
   const query = ('select  employee.id, concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
   db.query(query, (err, results) => {
       if(err) throw err;
-      console.log(results);
       inquirer.prompt([
           {
               type: 'list',
@@ -381,7 +379,8 @@ const removeDepartment = () => {
             },
             (err, results) => {
                 if (err) throw err;
-                console.log(results + 'Department Removed');
+                console.log('Department Removed');
+                console.table(results);
                 startTracker();
             });
 
@@ -413,7 +412,8 @@ const removeRole = () => {
             db.query(`delete from role where ? `, { title: answer.removeRole},
             (err, results) => {
                 if (err) throw err;
-                console.log(results + 'Role Removed');
+                console.log('Role Removed');
+                console.table(results);
                 startTracker();
             });
         })
@@ -436,7 +436,9 @@ const removeEmployee = () => {
                 message: 'Enter the ID of the Employee to remove:'
             }
         ]).then((answer) => {
-            db.query(`DELETE FROM employee where ?`, { id: answer.IDtoRemove })
+            db.query(`DELETE FROM employee where ?`, { id: answer.IDtoRemove });
+            console.log('employee Removed');
+            console.table(results);
             startTracker();
         })
     })
