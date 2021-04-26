@@ -101,8 +101,8 @@ const startTracker = () => {
         default:
             console.log(`Invalid Action: ${answer.action}`);
             break;
-    }
-});
+        }
+    });
 
 }
 
@@ -350,7 +350,7 @@ const updateRole = () => {
         db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`,
         (err, results) => {
                     if (err) throw err;
-                    console.log(results + 'Role Updated!');
+                    console.log('Role Updated!');
                     startTracker();
                 });
         });
@@ -391,7 +391,6 @@ const removeDepartment = () => {
             (err, results) => {
                 if (err) throw err;
                 console.log('Department Removed');
-                console.table(results);
                 startTracker();
             });
 
@@ -424,7 +423,6 @@ const removeRole = () => {
             (err, results) => {
                 if (err) throw err;
                 console.log('Role Removed');
-                console.table(results);
                 startTracker();
             });
         })
@@ -448,8 +446,7 @@ const removeEmployee = () => {
             }
         ]).then((answer) => {
             db.query(`DELETE FROM employee where ?`, { id: answer.IDtoRemove });
-            console.log('employee Removed');
-            console.table(results);
+            console.log('Employee Removed');
             startTracker();
         })
     })
