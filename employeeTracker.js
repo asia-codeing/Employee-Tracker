@@ -25,8 +25,8 @@ const startTracker = () => {
     message: 'What would you like to do?',
     choices: [
         'View All Employees',
-        // 'View All Employees By Manager',
-        // 'View All Employees By Department',
+        'View All Employees By Manager',
+        'View All Employees By Department',
         'View Departments',
         'View Roles',
         'View Total Utilized Budget',
@@ -109,24 +109,35 @@ const startTracker = () => {
 //=====================================================================View Functions===================================================
 
 const viewAllEmployees = () => {
-    let query = ('select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary,concat(e.first_name," ",e.last_name) as manager from department inner join role on role.department_id = department.id inner join employee on role.id = employee.role_id left join employee e on employee.manager_id =  e.id ;')
+    let query = ('select employee.id,employee.first_name, employee.last_name, role.title, department.name department, role.salary,concat(e.first_name," ",e.last_name) as manager from department inner join role on (role.department_id = department.id) inner join employee on (role.id = employee.role_id) left join employee e on (employee.manager_id =  e.id );')
 db.query(query, (err, res) => {
     if(err) throw err;
     console.table(res);
     startTracker();
-  })
-}
+  });
+};
 
 const viewByManager = () => {
+   let query = ('select employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, concat(e.first_name," " , e.last_name) as manager from employee left join employee e on (e.id = employee.manager_id) inner join role on (role.id = employee.role_id) inner join department on (department.id = role.department_id) order by e.id')     
+    
+db.query(query,  (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        startTracker();
+    }); 
+};
 
-
-}
 
 
 const viewByDepartment = () => {
+    db.query('select employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, concat(e.first_name, " ", e.last_name) as manager from employee left join employee e on (e.id = employee.manager_id) inner join role on (role.id = employee.role_id) inner join department on (department.id = role.department_id) order by department.name', 
+        (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            startTracker();
+        }); 
+    };
 
-    
-}
 
 const viewDepartments = () => {
     let query = ('select * from department;')
