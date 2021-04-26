@@ -25,7 +25,7 @@ Application that managing a company's employees using node, inquirer, and MySQL.
   * In the command line type node followed by the name of the file, like the command bellow: 
 
   ```
-  node ndex.js  
+  node employeeTracker.js  
   ```
   
   ## Screenshots:
