@@ -82,7 +82,7 @@ const startTracker = () => {
             //function
             updateRole();
             break;    
-        case 'Update Employee Manager' :
+        case 'Update Manager' :
             //function
             updateManager(); 
             break;
@@ -289,7 +289,7 @@ const addEmployee = () => {
 //=====================================================Update Functions===============================================================
 
 const updateRole = () => {
-  const query = ('select  employee.id, concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select title from role');
+  const query = ('select  employee.id, concat(employee.first_name, employee.last_name) as fullName from employee inner join role on role.id = employee.role_id; select id, title from role');
   db.query(query, (err, results) => {
       if(err) throw err;
       inquirer.prompt([
@@ -298,12 +298,12 @@ const updateRole = () => {
               name: 'employeeName',
               choices() {
                 const choiceArray = [];
-                results[0].forEach(({ fullName }) => {
-                  choiceArray.push(fullName);
+                results[0].forEach(({ id,fullName}) => {
+                  choiceArray.push(id,fullName);
                 });
             return choiceArray;
               },
-              message: 'Select Employee name to update role:'
+              message: 'Select Employee ID to update role:'
 
           },
           {
@@ -311,49 +311,21 @@ const updateRole = () => {
             name: 'newRole',
             choices() {
                 const choiceArray = [];
-                results[1].forEach(({ title }) => {
-                    choiceArray.push(title);
+                results[1].forEach(({ id,title }) => {
+                    choiceArray.push(id,title);
                 });
             return choiceArray;
           },
-            message: "Select the Job Title:" 
+            message: "Select the Job Title ID:" 
           }
       ])
-      .then((answer) => {
-          console.log(answer);
-        //   db.query(`UPDATE employee 
-        //   SET role_id = ? 
-        //   WHERE id = ?`,
-        //     [
-        //         {
-        //             updated:answer.newRole,
-        //         }, 
-        //         {
-        //             employee:answer.employeeName,
-        //         }
-                
-        //     ], 
-        
-        // let roleID = [];
-        // let employeeID = [];
-        // for (i=0; i < results.length; i++){
-        //     if (answer.newRole == results[i].title){
-        //         roleID = results[i].id;
-        //     }
-        // }
-        // for (i=0; i < results.length; i++){
-        //     if (answer.employeeName == results[i].fullName){
-        //         employeeID = results[i].id;
-        //     }
-        // }
-        
-        db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee WHERE concat(employee.first_name, employee.last_name) = ${answer.employeeName})`,
+      .then((answer) => {    
+        db.query(`UPDATE employee SET role_id = ? WHERE id = ? `,[answer.newRole, answer.employeeName],
         
         (err, results) => {
                     if (err) throw err;
                     console.log('Role Updated!');
-                    console.log(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`
-                    )
+                    console.log(results);
                     startTracker();
                 });
         });
