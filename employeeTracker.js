@@ -78,7 +78,7 @@ const startTracker = () => {
             //function
             addEmployee();
             break;
-        case 'Update Employee Role' :
+        case 'Update Role' :
             //function
             updateRole();
             break;    
@@ -347,10 +347,13 @@ const updateRole = () => {
         //     }
         // }
         
-        db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`,
+        db.query(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee WHERE concat(employee.first_name, employee.last_name) = ${answer.employeeName})`,
+        
         (err, results) => {
                     if (err) throw err;
                     console.log('Role Updated!');
+                    console.log(`UPDATE employee INNER JOIN role ON employee.role_id = role.id SET employee.role_id = (select role.id from role where role.title = ${answer.newRole}) WHERE employee.id = (select employee.id from employee where (concat(employee.first_name,employee.last_name) as fullName) = ${answer.employeeName}))`
+                    )
                     startTracker();
                 });
         });
