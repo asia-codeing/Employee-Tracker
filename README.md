@@ -34,7 +34,7 @@ Application that managing a company's employees using node, inquirer, and MySQL.
 
   ## Walkthrough Video:
   Check this video that demonstrates the functionality of the application:<br />
-   [Walkthrough-Video](https://drive.google.com/file/d/1cFnugkLNNihfV9ACVHNpJ1FaNWGIm1Ut/view?usp=sharing)
+   [Walkthrough-Video](https://drive.google.com/file/d/1tR8jWAJLhdlABAPt2nMDhwHOPl48ErhS/view?usp=sharing)
   
   
   ## License:
